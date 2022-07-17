@@ -12,7 +12,7 @@
 * [Setup](#setup)
 
 ## General info
-This project is simple Lorem ipsum dolor generator.
+A Twitter bot that retweets content from Fabrizio Romano related to Manchester United Football Club.
 	
 ## Technologies
 Project is created with:
