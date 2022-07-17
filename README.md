@@ -18,19 +18,21 @@ A Twitter bot that retweets content from Fabrizio Romano related to Manchester U
 Project is created with:
 * Python-3.8
 * Twitter API V2
-* Ament library version: 999
+* Google Cloud Platform (either Google Function or in my case Google Cloud VM).
 	
 ## Setup
-To run this project, install it locally using npm:
+To run this project, install it locally:
 
 ```
-$ cd ../lorem
-$ npm install
-$ npm start
+$ sudo apt update
+$ sudo apt install python3-pip
+$ pip3 install tweepy
+$ python3 main.py
+
 ```
 Links
 -----
 
 - [Documentation](https://tweepy.readthedocs.io/en/latest/)
-- [Official Discord Server](https://discord.gg/bJvqnhg)
+- [Google Cloud Platform](https://cloud.google.com/)
 - [Twitter API Documentation](https://developer.twitter.com/en/docs/twitter-api)
