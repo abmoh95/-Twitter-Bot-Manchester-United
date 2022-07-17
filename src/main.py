@@ -56,19 +56,18 @@ stream = MyStream(bearer_token=config.BEARER_TOKEN)
 
 
 ### The rules that the bot has to follow ###
-rules = tweepy.StreamRule("(from:abdi950329) (#testing123 OR Mantest123 United) (-is:reply)")
+rules = tweepy.StreamRule("(from:FabrizioRomano) (#MUFC OR Manchester United) (-is:reply)")
 stream.add_rules(rules)
 
-
-rules1 = tweepy.StreamRule("(from:FabrizioRomano) (#MUFC OR Manchester United) (-is:reply)")
+# A way for me to test that my bot works
+rules1 = tweepy.StreamRule("(from:abdi950329) (#testing123 OR Mantest123 United) (-is:reply)") 
 stream.add_rules(rules1)
 #stream.add_rules(tweepy.StreamRule(search_terms[0]))
 
 
 print(stream.get_rules())
 
-### Delete stream rules ###
-
+### Delete stream rules using the id's of each tweet ###
 #stream.delete_rules(ids=[1548360773755289605, 1548356538057703424, 1548003491410374657, 1548006612643696642])
 
 
