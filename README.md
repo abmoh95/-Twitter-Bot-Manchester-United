@@ -3,6 +3,7 @@
 [![PyPI Version](https://img.shields.io/pypi/v/tweepy?label=PyPI)](https://pypi.org/project/tweepy/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/tweepy?label=Python)](https://pypi.org/project/tweepy/)
 [![Twitter API v2](https://img.shields.io/endpoint?url=https%3A%2F%2Ftwbadges.glitch.me%2Fbadges%2Fv2)](https://developer.twitter.com/en/docs/twitter-api)
+[![Twitter API v2](https://img.shields.io/twitter/follow/FabrizioUTDBot?style=social)](https://twitter.com/FabrizioUTDBot)
 
 ![Screenshot](TwitterBotManU.png)
 
