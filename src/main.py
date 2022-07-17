@@ -1,95 +1,78 @@
-# Twitter bot
-
-from http import client
+# Importing Tweepy and time
 import tweepy
 import time
-import src.config as config
+import config
 
-# Del 1
-auth = tweepy.OAuthHandler(config.CONSUMER_KEY, config.CONSUMER_SECRET)
-auth.set_access_token(config.ACCESS_KEY, config.ACCESS_SECRET)
-api = tweepy.Client(bearer_token=config.BEARER_TOKEN)
+# Credentials (INSERT YOUR KEYS AND TOKENS IN THE STRINGS BELOW)
+# api_key = ""
+# api_secret = ""
+# bearer_token = r""
+# access_token = ""
+# access_token_secret = ""
 
+# Gainaing access and connecting to Twitter API using Credentials
+client = tweepy.Client(bearer_token=config.BEARER_TOKEN, consumer_key=config.CONSUMER_KEY,
+                       consumer_secret=config.CONSUMER_SECRET, access_token=config.ACCESS_KEY, access_token_secret=config.ACCESS_SECRET)
 
-# query = 'covid'
-# solution = api.search_recent_tweets(query=query)
-# print(solution.data[0])
+auth = tweepy.OAuth1UserHandler(
+    config.CONSUMER_KEY, config.CONSUMER_SECRET, config.ACCESS_KEY, config.ACCESS_SECRET)
+api = tweepy.API(auth)
 
-# Del 2
-client = tweepy.Client(consumer_key=config.CONSUMER_KEY, consumer_secret=config.CONSUMER_SECRET,
-                        access_token=config.ACCESS_KEY, access_token_secret=config.ACCESS_SECRET)
-
-# Creating a tweet
-
-#solution = client.create_tweet(text="Hello, Twitter1")
-# print(solution)
-
-# Retweet a tweet using its id
-
-#solution1 = client.retweet(tweet_id=1547373906553720833)
-# print(solution1)
-
-# Response(data=<User id=330262748 name=Fabrizio Romano username=FabrizioRomano>, includes={}, errors=[], meta={})
-id='@FabrizioRomano'
-solution = api.get_user(username='FabrizioRomano')
-print(solution)
-print(solution[0].id)
+search_terms = ["#MUFC"]
 
 
-solution1 = api.get_user(id=config.USER_ID_FABRIZIO)
-print(solution1)
+class MyStream(tweepy.StreamingClient):
 
-solution2 = api.get_users_tweets(id=config.USER_ID_FABRIZIO, max_results=5)
+    # This function gets called when the stream is working
+    def on_connect(self):
 
-print(solution2.data[0].data['text'])
+        print("Connected")
 
-print(type(solution2))
+    # This function gets called when a tweet passes the stream
 
-list_text = []
-val = 1
-for i in solution2.data:
-    print(val,end=' ')
-    print(i.id)
-    print(i.text)
-    list_text.append(i.text)
-    val = val+1
+    def on_tweet(self, tweet):
 
-for i in list_text:
-    if "b" in i:
-        print("yes det funkar")
-
-query = '#MUFC'
-#solution3 = api.search_recent_tweets(id=config.USER_ID_FABRIZIO, query=query)
-#print(type(solution3))
-solution2 = api.get_users_tweets(id=config.USER_ID_FABRIZIO, max_results=100)
-
-solution2.data.reverse()
-for i in solution2.data:
-    if query in i.text:
-        print("hejsan123")
-        print(i.id)
-        print(i.text)
-        client.retweet(tweet_id=i.id)
-        client.like(tweet_id=i.id)
-
-print(type(solution2.data))
+        # Displaying tweet in console
+        if tweet.referenced_tweets == None:
+            print(tweet.text)
+            client.retweet(tweet.id)
+            client.like(tweet.id)
+            # Delay between tweets
+            time.sleep(0.5)
 
 
+#### Creating Stream object ###
+stream = MyStream(bearer_token=config.BEARER_TOKEN)
 
-# for i in range(10):
-#     print("hello")
-#     time.sleep(1)
+# Adding terms to search rules
+# It's important to know that these rules don't get deleted when you stop the
+# program, so you'd need to use stream.get_rules() and stream.delete_rules()
+# to change them, or you can use the optional parameter to stream.add_rules()
+# called dry_run (set it to True, and the rules will get deleted after the bot
+# stopped running).
 
-# try:
-#     api.verify_credentials()
-#     print("Authentication OK")
-# except:
-#     print("Error during authentication")
-
-
-# def main():
-#     print("Hello Twitter world, Mancheter United")
+#for i in search_terms:
+#stream.add_rules(tweepy.StreamRule(search_terms[0]))
 
 
-# if __name__ == "__main__":
-#     main()
+### The rules that the bot has to follow ###
+rules = tweepy.StreamRule("(from:abdi950329) (#testing123 OR Mantest123 United) (-is:reply)")
+stream.add_rules(rules)
+
+
+rules1 = tweepy.StreamRule("(from:FabrizioRomano) (#MUFC OR Manchester United) (-is:reply)")
+stream.add_rules(rules1)
+#stream.add_rules(tweepy.StreamRule(search_terms[0]))
+
+
+print(stream.get_rules())
+
+### Delete stream rules ###
+
+#stream.delete_rules(ids=[1548360773755289605, 1548356538057703424, 1548003491410374657, 1548006612643696642])
+
+
+### Starting stream ###
+
+#stream.filter(tweet_fields=["referenced_tweets"])
+stream.filter()
