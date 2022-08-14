@@ -1,4 +1,4 @@
-# Twitter-Bot-Manchester-United
+# Twitter-Bot-Manchester-United 🤖
 
 [![PyPI Version](https://img.shields.io/pypi/v/tweepy?label=PyPI)](https://pypi.org/project/tweepy/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/tweepy?label=Python)](https://pypi.org/project/tweepy/)
